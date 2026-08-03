@@ -16,15 +16,23 @@ def get_price(url):
 
         print("Opening Flipkart...")
 
-        page.goto(
-            url,
-            wait_until="domcontentloaded",
-            timeout=60000
-        )
+        try:
+            page.goto(
+                url,
+                wait_until="commit",
+                timeout=90000
+            )
+
+            print("Navigation completed")
+
+        except Exception as e:
+            print("Navigation failed:", e)
+            browser.close()
+            return None
 
         print("Waiting for page...")
 
-        page.wait_for_timeout(5000)
+        page.wait_for_timeout(8000)
 
         text = page.locator("body").inner_text()
 
@@ -32,6 +40,7 @@ def get_price(url):
 
         prices = re.findall(r"₹\s?([\d,]+)", text)
 
+        print("Prices found:")
         print(prices)
 
         return prices
