@@ -7,7 +7,7 @@ product = config["products"][0]
 
 prices = flipkart.get_price(product["url"])
 
-print("\nPrices found on page:\n")
-
-for p in prices[:20]:
-    print(p)
+if prices:
+    print(f"\nLowest detected bike price: ₹{min(prices):,}")
+else:
+    print("No valid bike prices found.")
