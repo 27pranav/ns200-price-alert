@@ -40,7 +40,15 @@ def get_price(url):
 
         prices = re.findall(r"₹\s?([\d,]+)", text)
 
-        print("Prices found:")
-        print(prices)
+# Convert to integers
+prices = [int(p.replace(",", "")) for p in prices]
 
-        return prices
+# Keep only realistic bike prices
+bike_prices = [p for p in prices if 100000 <= p <= 250000]
+
+print("Possible bike prices:")
+print(bike_prices)
+
+browser.close()
+
+return bike_prices
